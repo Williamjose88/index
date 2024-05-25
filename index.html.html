@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWW.CAHSTREAMER.COM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ac3131;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #666;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+        nav a:hover {
+            background-color: #444;
+        }
+        section {
+            padding: 20px;
+        }
+        .stream {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .stream iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+    </style>
+
+  
+</style>
+
+</head>
+<body>
+    
+    <header>
+        <h1>BEM VINDO</h1>
+    </header>
+    <nav>
+        <a href="">INICIO</a>
+        <a href="VIDEO.html">VIDEO</a>
+        <a href="IMAGENS.html">IMAGENS</a>
+        <a href="LOGIN.html">LOGIN</a>
+        <a href="CONTATO.html">CONTATO</a>
+        <a href="INFORMACAO.html">INFORMACAO</a>
+    </nav>
+    <section> 
+        <h2>TRANSMISSÃO AO VIVO</h2>
+        <video id="videoElement" autoplay></video>
+      
+        <script>
+          navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+              var video = document.getElementById('videoElement');
+              video.srcObject = stream;
+            })
+            .catch(function (err) {
+              console.log('Ocorreu um erro: ' + err);
+            });
+        </script>
+
+<header>
+    <img src="CAH.jpg" alt="Logo da Empresa">
+</header>
+
+<h1>Chat</h1>
+  
+<div id="mensagens"></div>
+
+<input type="text" id="mensagemInput">
+<button onclick="enviarMensagem()">Enviar</button>
+
+<script>
+  const socket = new WebSocket('ws://localhost:3000'); // Endereço do servidor WebSocket
+
+  socket.onmessage = function(event) {
+    const mensagemRecebida = event.data;
+    const divMensagens = document.getElementById('mensagens');
+    divMensagens.innerHTML += '<p>' + mensagemRecebida + '</p>';
+  };
+
+  function enviarMensagem() {
+    const mensagemInput = document.getElementById('mensagemInput');
+    const mensagem = mensagemInput.value;
+    socket.send(mensagem);
+    mensagemInput.value = '';
+  }
+</script>
+
+    <footer>
+        <p>&copy; PROJETO 20-05-2024. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
